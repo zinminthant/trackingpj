@@ -92,9 +92,9 @@
                     <li class="nav-item active">
                         <a href="${pageContext.request.contextPath}/main" class="nav-link" style="color: #000000;"><i class="fa fa-shopping-bag"></i>&nbsp;<span>Order List</span></a>
                     </li>
-                    <li class="nav-item ">
-                        <a href="${pageContext.request.contextPath}/delivery/customers" class="nav-link" style="color: #000000;"><i class="fa fa-user"></i>&nbsp;<span>Customer</span></a>
-                    </li>
+                    <%--<li class="nav-item ">--%>
+                        <%--<a href="${pageContext.request.contextPath}/delivery/customers" class="nav-link" style="color: #000000;"><i class="fa fa-user"></i>&nbsp;<span>Customer</span></a>--%>
+                    <%--</li>--%>
                     <%--<li class="nav-item active dropdown">--%>
                     <%--<a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>--%>
                     <%--<ul class="dropdown-menu">--%>

@@ -315,11 +315,11 @@
 
 
     var columns = [
-
-        { "sTitle": "Customer", "mData": "orderCode" }
+        { "sTitle": "No", "mData": "id" ,"sClass":"text-center"}
+        ,{ "sTitle": "Order Code", "mData": "orderCode" }
         ,{ "sTitle": "Customer", "mData": "customerName" }
         ,{ "sTitle": "Status", "mData": "currentStatus" }
-        ,{ "sTitle": "Order Created Date", "mData": "orderCreatedDate" }
+        ,{ "sTitle": "Order Created Date", "mData": "orderCreatedDate","sClass":"text-center" }
         ,{   "sTitle":"Action",
             "sClass": "text-center",
             "mData": null,

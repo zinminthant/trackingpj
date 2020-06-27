@@ -1,29 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Tracking</title>
+    <title>Components &rsaquo; Table &mdash; Stisla</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/modules/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="/assets/modules/datatables/datatables.min.css">
-    <link rel="stylesheet" href="/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+
     <!-- CSS Libraries -->
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
-    <link rel="stylesheet" href="/assets/modules/bootstrap-daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" href="/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
-    <link rel="stylesheet" href="/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
-
-    <!-- Start GA -->
-
-    <!-- /END GA --></head>
+    <link rel="stylesheet" type="text/css" href="/assets/build/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous">
+</head>
 <style>
     .content {
         padding: 10px;
@@ -135,35 +131,35 @@
 
                                 <div class="card" style="  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
                                     <div class="card-header">
-                                        <h4>#Fefwf34NEF</h4>
+                                        <h4>#${order.orderCode}</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Customer Name</label>
+                                            <label  class="col-sm-3 col-form-label">Customer Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" value="Mg MG" id="inputEmail3" readonly>
+                                                <input type="text" class="form-control" value="${order.customer.name}" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputPassword3" class="col-sm-3 col-form-label">Customer Phone</label>
+                                            <label for="phone" class="col-sm-3 col-form-label">Customer Phone</label>
                                             <div class="col-sm-9">
-                                                <input type="text" value="0977056778" class="form-control" id="inputPassword3" readonly>
+                                                <input type="text" value="${order.customer.phone}" class="form-control" id="phone" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label  class="col-sm-3 col-form-label">Customer City</label>
+                                            <label  class="col-sm-3 col-form-label">Customer Region</label>
                                             <div class="col-sm-9">
-                                                <input type="text" value="Mandalay" class="form-control"  readonly>
+                                                <input type="text" value="${order.customer.regionCode}" class="form-control"  readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="address">Customer Address</label>
-                                            <textarea id="address"  class="form-control" name="description" placeholder="No(),Street "  rows="2" readonly></textarea>
+                                            <textarea id="address"  class="form-control" name="description" placeholder="${order.customer.address}"  rows="2" readonly></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="remark">Customer Remark</label>
-                                            <textarea id="remark"  class="form-control" name="description" placeholder="customer remark" rows="2" readonly></textarea>
+                                            <textarea id="remark"  class="form-control" name="description" placeholder="${order.customer.remark}" rows="2" readonly></textarea>
                                         </div>
 
 
@@ -175,78 +171,82 @@
                             </div>
                             <div class="col-12 col-sm-5 col-lg-5">
 
+
                                 <div class="activities">
-                                    <div class="activity">
-                                        <div class="activity-icon bg-tracking text-white shadow-tracking">
-                                            <i class="fas fa-wine-bottle"></i>
-                                        </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job" style="font-weight:900;font-size:15px">Order Confirmed</span>
-                                                &emsp;
-                                                <div class="float-right dropdown">
-                                                    <i class="fas fa-edit"></i>
+                                    <c:forEach  items="${before}" var="status">
+                                        <div class="activity">
+                                            <div class="activity-icon bg-tracking text-white shadow-tracking">
+                                                <i class="${status.code.codeIcon}"></i>
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job" style="font-weight:900;font-size:15px">${status.code.codeName}</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="text-job" href="#">${status.date}</a>
+
                                                 </div>
-
-
-
-                                            </div>
-                                            <a class="text-job" href="#">18-06-2020 09:45AM</a>
-                                        </div>
-                                    </div>
-                                    <div class="activity">
-                                        <div class="activity-icon bg-tracking text-white shadow-tracking">
-                                            <i class="fas fa-shopping-bag"></i>
-                                        </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job" style="font-weight:900;font-size:15px">Ready To Ship</span>
-
-
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Date Time Picker</label>
-                                                <input type="text" class="form-control datetimepicker">
-                                            </div>
-                                            <div class="text-right">
-                                                <button class="btn btn-tracking">Submit</button>
+                                                <p>${status.code.descriptioon}</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:forEach>
+                                    <c:if test="${before.size()>0 &&before.size()<4}">
+
+                                        <div class="activity">
+
+                                        </div>
+                                    </c:if>
 
                                 </div>
                                 <div class="nonactivities">
-                                    <div class="activity">
-                                        <div class="activity-icon bg-secondary text-white shadow-secondary">
-                                            <i class="fas fa-truck"></i>
+                                    <c:forEach items="${after}" var="status">
+                                        <div class="activity">
+                                            <div class="activity-icon bg-secondary text-white shadow-secondary">
+                                                <i class="${status.code.codeIcon}"></i>
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job" style="font-weight:900;font-size:15px;color:grey">${status.code.codeName}</span>
+
+
+                                                </div>
+                                                <p>${status.code.descriptioon}</p>
+                                            </div>
                                         </div>
-                                        <div class="activity-detail">
+
+                                    </c:forEach>
+                                    <c:if test="${complete!=null}">
+                                    <div class="activity" >
+                                        <form:form id="completeForm" action="${pageContext.request.contextPath}/delivery/order/update" modelAttribute="complete">
+                                            <form:hidden path="id" value="${complete.id}"/>
+                                            <div class="activity-icon bg-secondary text-white shadow-secondary">
+                                            <i class="${complete.code.codeIcon}"></i>
+                                        </div>
+                                        <div class="activity-detail" style="  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
                                             <div class="mb-2">
-                                                <span class="text-job" style="font-weight:900;font-size:15px;color:grey">Shipping</span>
-                                                <span class="bullet"></span>
-                                                <a class="text-job" href="#"></a>
+                                                <span class="text-job" style="font-weight:900;font-size:15px;color:grey">${complete.code.codeName}</span>
 
 
                                             </div>
-                                            <p>your order has been carrying by delivery</p>
-                                        </div>
-                                    </div>
 
-                                    <div class="activity">
-                                        <div class="activity-icon bg-secondary text-white shadow-secondary">
-                                            <i class="fa fa-shopping-bag"></i>
-                                        </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job" style="font-weight:900;font-size:15px;color:grey">Delivered</span>
-                                                <span class="bullet"></span>
-                                                <a class="text-job" href="#"></a>
+
+                                            <div class="form-group">
+
+                                                <form:input path="date"  class="form-control datetimepicker"/>
+                                                <br>
+                                                <div class="text-right">
+                                                    <button type="submit" class="btn btn-tracking ">Submit</button>
+                                                </div>
+
 
                                             </div>
-                                            <p>order has been successfully delivered</p>
+
                                         </div>
+                                        </form:form>
                                     </div>
+                                    </c:if>
+
+
+
                                 </div>
                             </div>
 
@@ -280,88 +280,45 @@
 <script src="/assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
+<script src="/assets/modules/jquery-ui/jquery-ui.min.js"></script>
 
 <!-- Page Specific JS File -->
+<script src="/assets/js/page/components-table.js"></script>
 
 <!-- Template JS File -->
 <script src="/assets/js/scripts.js"></script>
 <script src="/assets/js/custom.js"></script>
-<script src="/assets/modules/datatables/datatables.min.js"></script>
 <script src="/assets/js/util.js"></script>
-<script src="/assets/js/page/forms-advanced-forms.js"></script>
-<script src="/assets/modules/cleave-js/dist/cleave.min.js"></script>
-<script src="/assets/modules/cleave-js/dist/addons/cleave-phone.us.js"></script>
-<script src="/assets/modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
-<script src="/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="/assets/modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script src="/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-<script src="/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
+<script src="/assets/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
 
 
 </body>
 <script>
-    var contextPath='${pageContext.request.contextPath}';
+    jQuery(document).ready(function($) {
+        if (window.jQuery().datetimepicker) {
+            $('.datetimepicker').datetimepicker({
+                // Formats
+                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
+                format: 'DD-MM-YYYY hh:mm A',
 
-    window.onscroll = function() {myFunction()};
-    //
-    // var navbar = document.getElementById("navbar");
-    // var sticky = navbar.offsetTop;
-    //
-    // function myFunction() {
-    //     if (window.pageYOffset >= sticky) {
-    //         navbar.classList.add("sticky");
-    //         $(".navbar-secondary").css({ 'top' :0});
-    //     } else {
-    //         navbar.classList.remove("sticky");
-    //         $(".navbar-secondary").css({ 'top' :'70px'});
-    //     }
-    // }
-
-
-
-
-    var columns = [
-
-        { "sTitle": "Order Id", "mData": "orderID" }
-        ,{ "sTitle": "Customer", "mData": "customer" }
-        ,{ "sTitle": "Delivery", "mData": "delivery" }
-        ,{ "sTitle": "Status", "mData": "status" }
-        ,{   "sTitle":"date",
-            "sClass": "text-left",
-            "mData": null,
-            "bSortable": false,
-            "mRender": function(data) {
-                return moment(data.date).format('YYYY-MM-DD')+'<br>'+moment(data.date).format('hh:mm:ss a');
-            }
-        },
-        {   "sTitle":"Action",
-            "sClass": "text-center",
-            "mData": null,
-            "bSortable": false,
-            "mRender": function(data) {
-                return '<a href="#" onclick="funtion()" class="btn btn-icon icon-left btn-outline-dark"><i class="far fa-user"></i> Detail</a>';
-            }
-        }];
-
-
-    $(document).ready(function () {
-
-        orderList();
-
-
-
+                // Your Icons
+                // as Bootstrap 4 is not using Glyphicons anymore
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+        }
     });
-
-    function orderList(){
-
-        var obj='';
-
-
-        oTable = ajaxDataTable($('#resultTableId'), columns, '/rest/orders',obj, 10, true, true);
-
-
-    }
-
 
 </script>
 </html>

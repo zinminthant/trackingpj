@@ -183,6 +183,11 @@
                                             <input type="text" id="code_name" class="form-control">
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>Code Descriptioon</label>
+                                            <input type="text" id="code_description" class="form-control">
+                                        </div>
+
                                     </div>
                                     <div class="card-footer text-right">
                                         <button type="button" class="btn btn-outline-dark" onclick="saveCode()">Save</button>
