@@ -282,6 +282,7 @@
                                                             <h4>#${order.orderCode}</h4>
                                                             <div class="invoice-number">${order.statusSet[0].date}</div>
                                                         </div>
+                                                        <br><br>
 
                                                         <div class="row">
                                                             <div class="col-md-6">
