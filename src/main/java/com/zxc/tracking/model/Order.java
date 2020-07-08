@@ -27,6 +27,13 @@ public class Order implements Serializable {
     @Column(name = "IS_COMPLETE")
     private Boolean isComplete=Boolean.FALSE;
 
+    @Column(name = "SMS")
+    private Boolean sms=Boolean.FALSE;
+
+
+    @Column(name = "REMARK")
+    private String remark;
+
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
 //    @Column(name = "CREATED_DATE")
 //    @Temporal(TemporalType.TIMESTAMP)
@@ -119,5 +126,22 @@ public class Order implements Serializable {
 
     public void setComplete(Boolean complete) {
         isComplete = complete;
+    }
+
+
+    public Boolean getSms() {
+        return sms;
+    }
+
+    public void setSms(Boolean sms) {
+        this.sms = sms;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

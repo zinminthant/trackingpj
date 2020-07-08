@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -25,42 +26,11 @@
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <form class="form-inline mr-auto">
-                <ul class="navbar-nav mr-3">
-                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-                </ul>
-
-            </form>
-            <ul class="navbar-nav navbar-right">
-
-                <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Admin</div></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
-                        <a href="features-profile.html" class="dropdown-item has-icon">
-                            <i class="far fa-user"></i> Profile
-                        </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <%@include file="/WEB-INF/views/admin/navbar.jsp"%>
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"><img src="/assets/img/tracking.png" width="70px"> </a>
+                    <a href="index.html"><img src="/assets/img/onetwoone.png" width="170px"> </a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">OT</a>
@@ -72,7 +42,7 @@
                         <a href="${pageContext.request.contextPath}/main" class="nav-link" ><i class="fa fa-shopping-bag"></i>
                             <span>Order List</span></a>
                     </li>
-                    <li class="dropdown ">
+                    <li>
                         <a href="${pageContext.request.contextPath}/admin/createorder" class="nav-link" ><i class="fa fa-shopping-bag"></i><span>Create Order</span></a>
                     </li>
 
@@ -82,10 +52,17 @@
                     </li>
 
                     <li class="menu-header">Setting</li>
+
                     <li class="active">
-                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fa fa-cog" ></i>
-                            <span>Setting</span></a>
+                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fas fa-file-code"></i>
+
+                            <span>Code</span></a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/message" class="nav-link" ><i class="fas fa-comment-alt"></i>
+                            <span>Message</span></a>
+                    </li>
+
 
 
 
@@ -117,7 +94,7 @@
                             <div id="list" >
                                 <div class="row" style="float: right;padding-right:50px;">
 
-                                    <button type="button" class="btn btn-icon icon-left btn-outline-dark"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-icon icon-left btn-outline-dark" onclick="addFunction()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="row-fluid">
                                     <div class="col-md-7" >
@@ -160,39 +137,46 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="card" style=" box-shadow: 0 5px 9px 0 rgba(0,0,0,0.2);">
-                                <form>
+                                <form:form id="saveForm" action="${pageContext.request.contextPath}/admin/saveCode" modelAttribute="code" method="post">
+
+                                    <form:hidden path="id" id="id" />
                                     <div class="card-header">
                                         <h4>Code Detail</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label>Code Type</label>
-                                            <select id="code_type" class="form-control">
+                                            <form:select path="codeType" id="code_type" disabled="true" cssClass="form-control">
                                                 <c:forEach items="${list}" var="item">
                                                     <option value="${item}">${item}</option>
                                                 </c:forEach>
+                                            </form:select>
 
-                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Code ID</label>
-                                            <input type="text" id="code_id" class="form-control" required="">
+                                            <form:input path="codeID" id="code_id" cssClass="form-control" />
+
                                         </div>
                                         <div class="form-group">
                                             <label>Code Name</label>
-                                            <input type="text" id="code_name" class="form-control">
-                                        </div>
 
+                                            <form:input path="codeName" id="code_name" cssClass="form-control" required=""/>
+                                      </div>
+
+                                        <div class="des_div">
                                         <div class="form-group">
                                             <label>Code Descriptioon</label>
-                                            <input type="text" id="code_description" class="form-control">
+                                            <form:input path="descriptioon" id="code_description" cssClass="form-control"/>
+
+                                        </div>
                                         </div>
 
                                     </div>
                                     <div class="card-footer text-right">
-                                        <button type="button" class="btn btn-outline-dark" onclick="saveCode()">Save</button>
+                                        <button type="button" class="btn btn-outline-dark" onclick="saveCode()" >Save</button>
                                     </div>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                     </div>
@@ -238,7 +222,7 @@
 
 
 
-
+    var oTable ;
     var columns = [
 
         { "sTitle": "Code Type", "mData": "codeType" }
@@ -255,11 +239,32 @@
 
     $(document).ready(function () {
 
+
         orderList();
 
 
 
+        $('#resultTableId tbody').on( 'click', 'tr', function () {
+            var dat=$("#resultTableId").DataTable().row( this ).data();
+            console.log(dat);
+
+            $("#id").val(dat.id);
+
+            $("#code_type").val(dat.codeType);
+            $("#code_id").val(dat.codeID);
+            $("#code_name").val(dat.codeName);
+            $("#code_description").val(dat.descriptioon);
+
+        } );
+
+
+
+
+
+
     });
+
+
 
     function orderList(){
 
@@ -272,26 +277,38 @@
     }
 
 
-    function saveCode(){
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "${pageContext.request.contextPath}/rest/admin/savecode",
-            data: { code_type:$("#code_type").val()
-                     , code_id:$("#code_id").val()
-                     ,code_name:$("#code_name").val()},
-
-            success: function (response) {
-                alert("success");
-            },
-            error: function(xhr, status, error){
-                var errorMessage = xhr.status + ': ' + xhr.statusText
-                alert('Error - ' + errorMessage);
-            }
-        })
 
 
+
+
+function saveCode() {
+        console.log($("#code_type").val());
+        console.log($("#saveForm").serialize());
+    $.ajax({
+        url: '${pageContext.request.contextPath}/rest/admin/saveCode',
+        type: 'POST',
+        data: $("#saveForm").serialize()+'&codeType='+$("#code_type").val() ,
+        dataType:'json',
+        success: function (response) {
+           orderList();
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+}
+
+    function addFunction(){
+        $('#saveForm')[0].reset();
+
+        $("#id").val(0);
+
+        $("#des_div").hide();
 
     }
+
+
+
 </script>
 </html>

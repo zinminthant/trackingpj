@@ -45,7 +45,7 @@
     <div class="main-wrapper container">
 
         <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <a href="index.html" class="navbar-brand sidebar-gone-hide" style="padding-left: 200px;"><img src="/assets/img/tracking_d.png" width="70px"> </a>
+            <%--<a href="index.html" class="navbar-brand sidebar-gone-hide" style="padding-left: 200px;"><img src="/assets/img/onetwoone.png" width="100px"> </a>--%>
             <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar" ><i class="fas fa-bars"></i></a>
 
             <form class="form-inline ml-auto" >
@@ -59,18 +59,13 @@
                     <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Delivery</div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
+
                         <a href="features-profile.html" class="dropdown-item has-icon">
                             <i class="far fa-user"></i> Profile
                         </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
+
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
+                        <a href="${pageContext.request.contextPath}/" class="dropdown-item has-icon text-dark">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -266,7 +261,7 @@
         </div>
         <footer class="main-footer">
             <div class="footer-left">
-                Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">zxc</a>
+                <a href="index.html"><img src="/assets/img/onetwoone.png" width="150px"> </a>
             </div>
             <div class="footer-right">
 
@@ -316,20 +311,29 @@
 
 
     var columns = [
-
-        { "sTitle": "No", "mData": "id" },
-        { "sTitle": "Order Code", "mData": "orderCode" }
+        { "sTitle": "No", "mData": "id" ,"sClass":"text-center"}
+        ,{   "sTitle":"Order Code",
+            "sClass": "text-center",
+            "mData": null,
+            "mRender": function(data) {
+                return '<span style="color:#00462e">#'+data.orderCode+'</span>';
+            }
+        }
         ,{ "sTitle": "Customer", "mData": "customerName" }
         ,{ "sTitle": "Status", "mData": "currentStatus" }
-        ,{ "sTitle": "Order Created Date", "mData": "orderCreatedDate" }
+        ,{ "sTitle": "Order Created Date", "mData": "orderCreatedDate","sClass":"text-center" }
         ,{   "sTitle":"Action",
             "sClass": "text-center",
             "mData": null,
             "bSortable": false,
             "mRender": function(data) {
-                return '<a href="${pageContext.request.contextPath}/delivery/orders/'+data.id+'" onclick="funtion()" class="btn btn-icon icon-left btn-outline-dark"><i class="fa fa-shopping-bag"></i> Detail</a>';
+                var str='';
+
+                str=str+'<a href="${pageContext.request.contextPath}/delivery/orders/'+data.id+'" onclick="funtion()" class="btn btn-icon icon-left btn-outline-dark"><i class="fa fa-shopping-bag"></i> Detail</a>';
+                return str;
             }
         }];
+
     $(document).ready(function () {
 
         orderList();
@@ -343,7 +347,7 @@
         var obj='';
 
 
-        oTable = ajaxDataTable($('#resultTableId'), columns, '/rest/orders',obj, 10, true, true);
+        oTable = ajaxDataTableWithoutSelect($('#resultTableId'), columns, '/rest/orders',obj, 10, true, true);
 
 
 

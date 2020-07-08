@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -40,7 +41,7 @@
     <div class="main-wrapper container">
 
         <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <a href="index.html" class="navbar-brand sidebar-gone-hide" style="padding-left: 200px;"><img src="/assets/img/tracking_d.png" width="70px"> </a>
+            <%--<a href="index.html" class="navbar-brand sidebar-gone-hide" style="padding-left: 200px;"><img src="/assets/img/tracking_d.png" width="70px"> </a>--%>
             <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar" ><i class="fas fa-bars"></i></a>
 
             <form class="form-inline ml-auto" >
@@ -54,18 +55,13 @@
                     <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Delivery</div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
+
                         <a href="features-profile.html" class="dropdown-item has-icon">
                             <i class="far fa-user"></i> Profile
                         </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
+
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
+                        <a href="${pageContext.request.contextPath}/" class="dropdown-item has-icon text-dark">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -87,9 +83,7 @@
                         <li class="nav-item active">
                             <a href="${pageContext.request.contextPath}/main" class="nav-link" style="color: #000000;"><i class="fa fa-shopping-bag"></i>&nbsp;<span>Order List</span></a>
                         </li>
-                        <li class="nav-item ">
-                            <a href="${pageContext.request.contextPath}/delivery/customers" class="nav-link" style="color: #000000;"><i class="fa fa-user"></i>&nbsp;<span>Customer</span></a>
-                        </li>
+
                     <%--<li class="nav-item active dropdown">--%>
                     <%--<a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>--%>
                     <%--<ul class="dropdown-menu">--%>
@@ -131,7 +125,7 @@
 
                                 <div class="card" style="  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
                                     <div class="card-header">
-                                        <h4>#${order.orderCode}</h4>
+                                        <h4 style="font-weight: bold;color: #000000">#${order.orderCode}</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group row">
@@ -159,7 +153,7 @@
 
                                         <div class="form-group">
                                             <label for="remark">Customer Remark</label>
-                                            <textarea id="remark"  class="form-control" name="description" placeholder="${order.customer.remark}" rows="2" readonly></textarea>
+                                            <textarea id="remark"  class="form-control" name="description" placeholder="${order.remark}" rows="2" readonly></textarea>
                                         </div>
 
 
@@ -175,14 +169,14 @@
                                 <div class="activities">
                                     <c:forEach  items="${before}" var="status">
                                         <div class="activity">
-                                            <div class="activity-icon bg-tracking text-white shadow-tracking">
+                                            <div class="activity-icon bg-tracking text-danger shadow-tracking">
                                                 <i class="${status.code.codeIcon}"></i>
                                             </div>
                                             <div class="activity-detail">
                                                 <div class="mb-2">
                                                     <span class="text-job" style="font-weight:900;font-size:15px">${status.code.codeName}</span>
                                                     <span class="bullet"></span>
-                                                    <a class="text-job" href="#">${status.date}</a>
+                                                    <a class="text-job" href="#"><fmt:formatDate value="${status.date}" pattern="yyyy-dd-MMM hh:mm aa"/></a>
 
                                                 </div>
                                                 <p>${status.code.descriptioon}</p>
@@ -198,6 +192,7 @@
 
                                 </div>
                                 <div class="nonactivities">
+
                                     <c:forEach items="${after}" var="status">
                                         <div class="activity">
                                             <div class="activity-icon bg-secondary text-white shadow-secondary">
@@ -215,9 +210,11 @@
 
                                     </c:forEach>
                                     <c:if test="${complete!=null}">
-                                    <div class="activity" >
                                         <form:form id="completeForm" action="${pageContext.request.contextPath}/delivery/order/update" modelAttribute="complete">
-                                            <form:hidden path="id" value="${complete.id}"/>
+                                        <form:hidden path="id" value="${complete.id}"/>
+                                    <div class="activity" >
+
+
                                             <div class="activity-icon bg-secondary text-white shadow-secondary">
                                             <i class="${complete.code.codeIcon}"></i>
                                         </div>
@@ -241,8 +238,9 @@
                                             </div>
 
                                         </div>
-                                        </form:form>
+
                                     </div>
+                                        </form:form>
                                     </c:if>
 
 
@@ -261,7 +259,7 @@
         </div>
         <footer class="main-footer">
             <div class="footer-left">
-                <%--Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>--%>
+                <a href="index.html"><img src="/assets/img/onetwoone.png" width="150px"> </a>
             </div>
             <div class="footer-right">
 
@@ -301,7 +299,7 @@
             $('.datetimepicker').datetimepicker({
                 // Formats
                 // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
-                format: 'DD-MM-YYYY hh:mm A',
+                format: 'YYYY-MM-DD hh:mm A',
 
                 // Your Icons
                 // as Bootstrap 4 is not using Glyphicons anymore

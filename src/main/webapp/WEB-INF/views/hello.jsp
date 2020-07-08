@@ -230,11 +230,9 @@
 
         </div>
         <div class="fadeIn first">
-            <img src="/assets/img/tracking.png" width="150px">
+            <img src="/assets/img/onetwoone.svg" width="300px">
         </div>
-        <div style="height: 50px">
 
-        </div>
         <!-- Login Form -->
         <form id="login" action="${pageContext.request.contextPath}/login" method="post">
             <input type="text" id="username" name="username"  placeholder="username" onfocus="this.placeholder = ''"

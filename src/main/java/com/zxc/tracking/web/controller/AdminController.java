@@ -1,6 +1,7 @@
 package com.zxc.tracking.web.controller;
 
 
+import com.zxc.tracking.model.Const.Message;
 import com.zxc.tracking.model.Order;
 import com.zxc.tracking.model.OrderStatus;
 import com.zxc.tracking.model.User.Customer;
@@ -17,11 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -49,7 +52,7 @@ public class AdminController {
     public String createOrderGet(Model model){
 
 
-        model.addAttribute("orderId",codeGenerator.randomUUID(9,0,'Z'));
+        model.addAttribute("orderId",codeGenerator.randomUUID(5,0,'T'));
         model.addAttribute("order",new Order());
         model.addAttribute("regionList",settingService.findCodesByType("REGION"));
             model.addAttribute("deliveryList",settingService.deliveryList());
@@ -73,15 +76,46 @@ public class AdminController {
 
         orderService.createOrder(order);
 
-        return "/admin/order_create";
+        return "redirect:/main";
+    }
+
+
+    @RequestMapping(value = "/updateOrder",method = RequestMethod.POST)
+    public String UpdateOrder(@ModelAttribute("order")Order order){
+
+        Collections.sort(order.getStatusSet(),Comparator.comparing(OrderStatus::getDate,Comparator.nullsLast(Comparator.naturalOrder())));
+
+            for(int i=0;i<4;i++){
+                order.getStatusSet().get(i).setCode(settingService.getCodeByCodeId(statusList.get(i)));
+                order.getStatusSet().get(i).setOrder(order);
+            }
+
+
+
+        orderService.createOrder(order);
+
+        return "redirect:/main";
     }
 
 
 
 
+    @RequestMapping("/orders/{id}")
+    public String orderDetail(Model model, @PathVariable("id")long id){
 
-    @RequestMapping("/orders/detail")
-    public String orderDetail(){
+
+
+        Order order=orderService.getOrderById(id);
+
+
+        List<OrderStatus> statuses=order.getStatusSet().stream().sorted(Comparator.comparing(OrderStatus::getDate,Comparator.nullsLast(Comparator.nullsLast(Comparator.naturalOrder())))).collect(Collectors.toList());
+
+        order.setStatusSet(statuses);
+
+
+        model.addAttribute("order",order);
+        model.addAttribute("regionList",settingService.findCodesByType("REGION"));
+        model.addAttribute("deliveryList",settingService.deliveryList());
         return "/admin/order_detail";
     }
 
@@ -92,11 +126,37 @@ public class AdminController {
         return "admin/setting";
     }
 
+    @RequestMapping("/message")
+    public String message(Model model){
+
+        model.addAttribute("message",(settingService.getMessage("EN")!=null)?settingService.getMessage("EN"):new Message());
+        return "admin/message";
+    }
+
+    @RequestMapping(value = "/savemessage",method = RequestMethod.POST)
+    public String saveMessage(@ModelAttribute("message")Message message){
+
+        settingService.createMessageFormat(message);
+
+        return "redirect:/admin/message";
+    }
+
+
+    @RequestMapping(value = "/saveCode",method = RequestMethod.POST)
+    public String saveCode(){
+
+
+    System.out.println("fwefwef");
+return "";
+    }
+
+
 
 
 
     @RequestMapping("/customers")
-    public String customerList(){
+    public String customerList(Model model){
+        model.addAttribute("codes",settingService.findCodesByType("REGION"));
         return "/admin/customer_list";
     }
 

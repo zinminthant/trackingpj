@@ -28,19 +28,32 @@ public class AdminRestController {
 
 
 
-    @RequestMapping(value = "/savecode",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/saveCode",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveCode(HttpServletRequest request){
 
-        String codeType=request.getParameter("code_type");
-        String codeId  =request.getParameter("code_id");
-        String codeName=request.getParameter("code_name");
+        Code coderesult=new Code();
 
-        Code code=settingService.createCode(new Code(codeId,codeType,codeName));
+        long id=Long.parseLong(request.getParameter("id"));
+        String codeType=request.getParameter("codeType");
+        String codeId  =request.getParameter("codeID");
+        String codeName=request.getParameter("codeName");
+        String description=request.getParameter("descriptioon");
+
+
+        if(id==0L){
+            coderesult=settingService.createCode(new Code(codeId,codeType,codeName,description));
+
+        }
+        else {
+            Code code=settingService.findCodeById(id);
+            code.setCodeName(codeName);code.setDescriptioon(description);
+            coderesult=settingService.createCode(code);
+        }
 
 
 
 
-        return new ResponseEntity<>(code,HttpStatus.OK);
+        return new ResponseEntity<>(coderesult,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/codes", produces = MediaType.APPLICATION_JSON_VALUE)

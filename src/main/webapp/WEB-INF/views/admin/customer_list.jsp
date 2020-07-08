@@ -1,9 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -24,42 +25,11 @@
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <form class="form-inline mr-auto">
-                <ul class="navbar-nav mr-3">
-                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-                </ul>
-
-            </form>
-            <ul class="navbar-nav navbar-right">
-
-                <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Admin</div></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
-                        <a href="features-profile.html" class="dropdown-item has-icon">
-                            <i class="far fa-user"></i> Profile
-                        </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <%@include file="/WEB-INF/views/admin/navbar.jsp"%>
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"><img src="/assets/img/tracking.png" width="70px"> </a>
+                    <a href="index.html"><img src="/assets/img/onetwoone.png" width="170px"> </a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">OT</a>
@@ -71,7 +41,7 @@
                         <a href="${pageContext.request.contextPath}/main" class="nav-link" ><i class="fa fa-shopping-bag"></i>
                             <span>Order List</span></a>
                     </li>
-                    <li class="dropdown ">
+                    <li>
                         <a href="${pageContext.request.contextPath}/admin/createorder" class="nav-link" ><i class="fa fa-shopping-bag"></i><span>Create Order</span></a>
                     </li>
 
@@ -81,10 +51,17 @@
                     </li>
 
                     <li class="menu-header">Setting</li>
-                    <li class="dropdown ">
-                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fa fa-cog" ></i>
-                            <span>Setting</span></a>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fas fa-file-code"></i>
+
+                            <span>Code</span></a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/message" class="nav-link" ><i class="fas fa-comment-alt"></i>
+                            <span>Message</span></a>
+                    </li>
+
 
 
 
@@ -96,9 +73,9 @@
         <div class="main-content">
             <section id="list_view" class="section">
                 <div class="section-header">
-                    <h1>Order</h1>
+                    <h1>Customer</h1>
                     <div class="section-header-breadcrumb">
-                        <div class="breadcrumb-item active"><a href="#">Order</a></div>
+                        <div class="breadcrumb-item active"><a href="#">Customer</a></div>
                         <div class="breadcrumb-item"><a href="#">List</a></div>
 
                     </div>
@@ -138,10 +115,14 @@
                                         <div class="col-md-4" >
                                             <div class="row">
 
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" style="color:#000000">Name</label>
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" style="color:#000000">Region</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input type="text" name="search_name" id="search_name" class="form-control" >
-                                                    <span id="searchHelp" style="font-size: small;color: #6777ef"></span>
+                                                    <select name="search_region" id="search_regioon" class="form-control">
+                                                        <option value="">All</option>
+                                                        <c:forEach items="${codes}" var="code">
+                                                            <option value="${code.codeID}">${code.codeName}</option>
+                                                        </c:forEach>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -254,14 +235,7 @@
                 </div>
             </section>
         </div>
-        <footer class="main-footer">
-            <div class="footer-left">
-                Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-            </div>
-            <div class="footer-right">
-
-            </div>
-        </footer>
+        <%@include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
 </div>
 
@@ -284,6 +258,7 @@
 <script src="/assets/js/scripts.js"></script>
 <script src="/assets/js/custom.js"></script>
 <script src="/assets/js/util.js"></script>
+<script src="/assets/js/jquery.onEnter.js"></script>
 <script src="/assets/modules/datatables/datatables.min.js"></script>
 </body>
 <script>
@@ -293,10 +268,10 @@
 
 
     var columns = [
-
-        { "sTitle": "Name", "mData": "name" }
+        { "sTitle": "No", "mData": "id" }
+        ,{ "sTitle": "Name", "mData": "name" }
         ,{ "sTitle": "Phone", "mData": "phone" }
-        ,{ "sTitle": "City", "mData": "city" }
+        ,{ "sTitle": "Region", "mData": "region" }
         ,{   "sTitle":"Action",
             "sClass": "text-center",
             "mData": null,
@@ -314,12 +289,27 @@
 
     });
 
+
+
+
+    $("#search_customer").focusin(function () {
+        $("#customerHelp").html("press enter to search");
+    });
+    $("#search_customer").focusout(function () {
+        $("#customerHelp").html("");
+    });
+
+
+    $("#search_customer").onEnter(function () {
+        orderList();
+    })
+
+
     function orderList(){
 
-        var obj='';
 
+ oTable = ajaxDataTableWithoutSelect($('#resultTableId'), columns, '/rest/customers',$("#search_form").serialize(), 10, true, true);
 
-        oTable = ajaxDataTable($('#resultTableId'), columns, '/rest/customers',obj, 10, true, true);
 
 
     }

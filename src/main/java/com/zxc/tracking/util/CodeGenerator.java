@@ -8,7 +8,7 @@ import java.util.Random;
 @Component
 public class CodeGenerator {
 
-    static final private String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    static final private String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
     final private Random rng = new SecureRandom();
 
     char randomChar(){
@@ -20,7 +20,7 @@ public class CodeGenerator {
         int spacer = 0;
         while(length > 0){
             if(spacer == spacing){
-                sb.append(spacerChar);
+             //   sb.append(spacerChar);
                 spacer = 0;
             }
             length--;

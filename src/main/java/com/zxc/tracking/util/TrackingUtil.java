@@ -1,6 +1,7 @@
 package com.zxc.tracking.util;
 
 import com.zxc.tracking.model.OrderStatus;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrackingUtil {
 
@@ -50,6 +52,27 @@ public class TrackingUtil {
         DateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm aa");
         return format.format(date);
     }
+
+    public static List<OrderStatus> Before(List<OrderStatus> orderStatuses){
+        return orderStatuses.stream().filter(m->m.getDate()!=null && (m.getDate().compareTo(new Date())<0)).collect(Collectors.toList());
+
+    }
+
+    public static List<OrderStatus> AfterWithoutNull(List<OrderStatus> orderStatuses){
+        return  orderStatuses.stream().filter(m->m.getDate()!=null && (m.getDate().compareTo(new Date())>=0)).collect(Collectors.toList());
+
+    }
+
+    public static List<OrderStatus> After(List<OrderStatus> orderStatuses){
+        return  orderStatuses.stream().filter(m->m.getDate()==null || (m.getDate()!=null && (m.getDate().compareTo(new Date())>=0))).collect(Collectors.toList());
+
+    }
+
+    public static OrderStatus CompleteStatus(List<OrderStatus> orderStatuses){
+        return  orderStatuses.stream().filter(m->m.getDate()==null).findAny().orElse(null);
+
+    }
+
 
 
 }

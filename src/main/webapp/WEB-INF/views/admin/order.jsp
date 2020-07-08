@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -111,7 +111,7 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"><img src="/assets/img/tracking.png" width="70px"> </a>
+                    <a href="index.html"><img src="/assets/img/onetwoone.png" width="170px"> </a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">OT</a>

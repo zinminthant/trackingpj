@@ -23,11 +23,13 @@ public class OrderStatus {
     @JoinColumn(name = "STATUS",referencedColumnName = "CODE_ID")
     private Code code;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm aa")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm aa")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE")
     private Date date;
 
+    @Column(name = "SMS")
+    private Boolean sms=Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID",referencedColumnName = "ID")
@@ -86,6 +88,14 @@ public class OrderStatus {
         this.order = order;
     }
 
+
+    public Boolean getSms() {
+        return sms;
+    }
+
+    public void setSms(Boolean sms) {
+        this.sms = sms;
+    }
 
     @Override
     public String toString() {

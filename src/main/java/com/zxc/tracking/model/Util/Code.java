@@ -49,6 +49,14 @@ public class Code implements Serializable {
         this.codeName = codeName;
     }
 
+
+    public Code(String codeID, String codeType, String codeName, String descriptioon) {
+        this.codeID = codeID;
+        this.codeType = codeType;
+        this.codeName = codeName;
+        this.descriptioon = descriptioon;
+    }
+
     public long getId() {
         return id;
     }
@@ -105,6 +113,8 @@ public class Code implements Serializable {
     public void setCodeIcon(String codeIcon) {
         this.codeIcon = codeIcon;
     }
+
+
 }
 
 

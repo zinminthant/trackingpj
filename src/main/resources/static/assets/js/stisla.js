@@ -212,7 +212,7 @@
     var chat = $.extend({
       position: 'chat-right',
       text: '',
-      time: moment(new Date().toISOString()).format('hh:mm'),
+      time: moment(new Date().toISOString()).format('MMM-DD hh:mm a'),
       picture: '',
       type: 'text', // or typing
       timeout: 0,

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -52,42 +52,11 @@
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <form class="form-inline mr-auto">
-                <ul class="navbar-nav mr-3">
-                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-                </ul>
-
-            </form>
-            <ul class="navbar-nav navbar-right">
-
-                <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Admin</div></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
-                        <a href="features-profile.html" class="dropdown-item has-icon">
-                            <i class="far fa-user"></i> Profile
-                        </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <%@include file="/WEB-INF/views/admin/navbar.jsp"%>
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"><img src="/assets/img/tracking.png" width="70px"> </a>
+                    <a href="index.html"><img src="/assets/img/onetwoone.png" width="170px"> </a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">OT</a>
@@ -95,11 +64,11 @@
                 <div style="height: 70px"></div>
                 <ul class="sidebar-menu">
                     <li class="menu-header">Order</li>
-                    <li class="active">
+                    <li>
                         <a href="${pageContext.request.contextPath}/main" class="nav-link" ><i class="fa fa-shopping-bag"></i>
                             <span>Order List</span></a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="${pageContext.request.contextPath}/admin/createorder" class="nav-link" ><i class="fa fa-shopping-bag"></i><span>Create Order</span></a>
                     </li>
 
@@ -109,10 +78,17 @@
                     </li>
 
                     <li class="menu-header">Setting</li>
-                    <li class="dropdown ">
-                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fa fa-cog" ></i>
-                            <span>Setting</span></a>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fas fa-file-code"></i>
+
+                            <span>Code</span></a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/message" class="nav-link" ><i class="fas fa-comment-alt"></i>
+                            <span>Message</span></a>
+                    </li>
+
 
 
 
@@ -158,11 +134,24 @@
 
 
 
+                                        <form:hidden path="customer.id" id="customer_id"/>
 
                                         <div class="form-group col-md-6">
                                             <label for="customer_name">Name</label>
-                                            <form:input path="customer.name" cssClass="form-control" id="customer_name"/>
+                                            <div class="input-group">
+                                                <form:input path="customer.name" cssClass="form-control" id="customer_name"/>
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <a href="#" data-toggle="modal" onclick="customerList()" data-target="#exampleModal">
+                                                            <i class="fas fa-user"></i>
+                                                        </a>
 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                                click user icon to select existing customer
+                                            </small>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="customer_phone">Phone</label>
@@ -185,11 +174,17 @@
 
                                     <div class="form-group">
                                         <label for="customer_remark">Remark</label>
-                                        <form:textarea path="customer.remark" cssClass="form-control" id="customer_remark" placeholder="remark" rows="3"/>
+                                        <form:textarea path="remark" cssClass="form-control" id="customer_remark" placeholder="remark" rows="3"/>
 
                                     </div>
 
-                                    <br>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customerCheck">
+                                            <label class="custom-control-label" for="customerCheck">Please check if customer is new</label>
+                                        </div>
+
+
+                                        <br>
                                     <div class="sep">Delivery Info</div>
                                     <br>
                                     <div class="form-row">
@@ -306,7 +301,7 @@
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="submit" class="btn btn-outline-primary btn-lg">Create</button>
-                                    <button class="btn btn-outline-dark btn-lg">Cancel</button>
+                                    <button type="button" class="btn btn-outline-dark btn-lg">Cancel</button>
                                 </div>
                             </div>
 
@@ -319,15 +314,59 @@
                 </div>
 
             </section>
-        </div>
-        <footer class="main-footer">
-            <div class="footer-left">
-                Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">zxc</a>
-            </div>
-            <div class="footer-right">
 
+
+        </div>
+        <%@include file="/WEB-INF/views/common/footer.jsp"%>
+
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <%--<h5 class="modal-title">Customers</h5>--%>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="search_form">
+                        <div class="row">
+
+                            <div class="col-md-12" >
+                                <div class="row">
+
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" style="color:#000000">Customer</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="search_name" id="search_customer" class="form-control" >
+                                        <span id="customerHelp" style="font-size: small;color: #6777ef"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </form><div style="height: 20px"></div>
+
+                    <div class="table-responsive table-striped">
+                        <table class="table" id="resultTableId">
+
+                        </table>
+                    </div>
+
+                </div>
+                <%--<div class="modal-footer bg-whitesmoke br">--%>
+                    <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+                    <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                <%--</div>--%>
             </div>
-        </footer>
+        </div>
     </div>
 </div>
 
@@ -345,6 +384,8 @@
 
 <!-- Page Specific JS File -->
 <script src="/assets/js/page/components-table.js"></script>
+<script src="/assets/modules/datatables/datatables.min.js"></script>
+
 
 <!-- Template JS File -->
 <script src="/assets/js/scripts.js"></script>
@@ -353,15 +394,37 @@
 
 <script src="/assets/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.62/jquery.inputmask.bundle.js"></script>
 </body>
 <script type="text/javascript">
+    var phones = [{ "mask": "##-###-######"}, { "mask": "##-###-##############"}];
+
+    var columns = [
+        { "sTitle": "No", "mData": "id" }
+        ,{ "sTitle": "Name", "mData": "name" }
+        ,{ "sTitle": "Phone", "mData": "phone" }
+        ,{ "sTitle": "Region", "mData": "region" }
+        ,{   "sTitle":"Action",
+            "sClass": "text-center",
+            "mData": null,
+            "bSortable": false,
+            "mRender": function(data) {
+            console.log(data)
+                return '<a href="#" onclick="selectCustomer('+data.id+',\''+data.name+'\',\''+data.phone+'\',\''+data.regionCode+'\')" class="btn btn-icon icon-left btn-outline-primary"><i class="fa fa-hand-pointer-o"></i> Select</a>';
+            }
+        }];
+
+
     jQuery(document).ready(function($) {
+        $('#customer_phone').inputmask({
+            mask: phones,
+            greedy: false,
+            definitions: { '#': { validator: "[0-9]", cardinality: 1}} });
         if (window.jQuery().datetimepicker) {
             $('.datetimepicker').datetimepicker({
                 // Formats
                 // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
-                format: 'DD-MM-YYYY hh:mm A',
+                format: 'YYYY-MM-DD hh:mm A',
 
                 // Your Icons
                 // as Bootstrap 4 is not using Glyphicons anymore
@@ -379,5 +442,29 @@
             });
         }
     });
+
+
+    function customerList(){
+
+
+        oTable = ajaxDataTable($('#resultTableId'), columns, '/rest/customers',$("#search_form").serialize(), 5, true, true);
+
+
+
+    }
+
+    function selectCustomer(id,name,phone,region) {
+
+        $('#exampleModal').modal('toggle');
+        console.log(id+name+phone+region);
+
+        $("#customer_name").val(name);
+        $("#customer_phone").val(phone);
+        $("#customer_region").val(region);
+        $("#customer_id").val(id);
+    }
+
+
+
 </script>
 </html>

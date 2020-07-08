@@ -118,7 +118,7 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
   color: #ffa426 !important; }
 
 .text-danger, .text-danger-all *, .text-danger-all *:before, .text-danger-all *:after {
-  color: #fc544b !important; }
+  color: #d41c2c !important; }
 
 .text-light, .text-light-all *, .text-light-all *:before, .text-light-all *:after {
   color: #e3eaef !important; }
@@ -1240,7 +1240,7 @@ h6 .badge {
     color: #fff !important; }
 
 .btn-outline-success:hover, .btn-outline-success:focus, .btn-outline-success:active, .btn-outline-success.disabled:hover, .btn-outline-success.disabled:focus, .btn-outline-success.disabled:active {
-  background-color: #63ed7a !important;
+  background-color: #00642e !important;
   color: #fff !important; }
 
 .btn-danger, .btn-danger.disabled {

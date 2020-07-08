@@ -1,5 +1,6 @@
 package com.zxc.tracking.model.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zxc.tracking.model.Order;
 
 import javax.persistence.*;
@@ -26,10 +27,9 @@ public class Customer {
     @Column(name = "ADDRESS")
     private String address;
 
-    @Column(name = "REMARK")
-    private String remark;
 
-    @OneToOne(mappedBy = "customer")
+    @JsonIgnore
+    @OneToOne(mappedBy = "customer",fetch = FetchType.LAZY)
     private Order order;
 
 
@@ -38,12 +38,12 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String phone, @NotNull String regionCode, String address, String remark) {
+    public Customer(String name, String phone, @NotNull String regionCode, String address) {
         this.name = name;
         this.phone = phone;
         this.regionCode = regionCode;
         this.address = address;
-        this.remark = remark;
+
     }
 
     public long getId() {
@@ -86,14 +86,6 @@ public class Customer {
         this.address = address;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     public Order getOrder() {
         return order;
     }
@@ -102,18 +94,7 @@ public class Customer {
         this.order = order;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", regionCode='" + regionCode + '\'' +
-                ", address='" + address + '\'' +
-                ", remark='" + remark + '\'' +
-                ", order=" + order +
-                '}';
-    }
+
 }
 
 

@@ -1,65 +1,53 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Table &mdash; Stisla</title>
+    <title>121</title>
 
-    <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/modules/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/assets/modules/datatables/datatables.min.css">
+    <link rel="stylesheet" href="/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 
+    <%--<link rel="stylesheet" href="/assets/modules/bootstrap-daterangepicker/daterangepicker.css">--%>
+    <link rel="stylesheet" href="/assets/modules/jquery-selectric/selectric.css">
+    <link rel="stylesheet" href="/assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
     <!-- CSS Libraries -->
 
     <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/confirm/jquery-confirm.css">
+
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/components.css">
-    <link rel="stylesheet" href="/assets/modules/datatables/datatables.min.css">
-    <link rel="stylesheet" href="/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>--%>
+    <!-- General CSS Files -->
 
- </head>
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="/assets/modules/bootstrap-daterangepicker/daterangepicker.css">
+
+
+</head>
+<style>
+
+
+</style>
 
 <body>
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #00642e">
-            <form class="form-inline mr-auto">
-                <ul class="navbar-nav mr-3">
-                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-                </ul>
-
-            </form>
-            <ul class="navbar-nav navbar-right">
-
-                <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="/assets/img/avatar/avatar-11.png" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Admin</div></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-title">Logged in 5 min ago</div>
-                        <a href="features-profile.html" class="dropdown-item has-icon">
-                            <i class="far fa-user"></i> Profile
-                        </a>
-                        <a href="features-activities.html" class="dropdown-item has-icon">
-                            <i class="fas fa-bolt"></i> Activities
-                        </a>
-                        <a href="features-settings.html" class="dropdown-item has-icon">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <%@include file="/WEB-INF/views/admin/navbar.jsp"%>
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"><img src="/assets/img/tracking.png" width="70px"> </a>
+                    <a href="index.html"><img src="/assets/img/onetwoone.png" width="170px"> </a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">OT</a>
@@ -81,10 +69,17 @@
                     </li>
 
                     <li class="menu-header">Setting</li>
-                    <li class="dropdown ">
-                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fa fa-cog" ></i>
-                            <span>Setting</span></a>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/setting" class="nav-link" ><i class="fas fa-file-code"></i>
+
+                            <span>Code</span></a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/message" class="nav-link" ><i class="fas fa-comment-alt"></i>
+                            <span>Message</span></a>
+                    </li>
+
 
 
 
@@ -122,8 +117,8 @@
 
                                                 <label class="col-form-label text-md-right col-12 col-md-4 col-lg-4" style="color:#000000">OrderID</label>
                                                 <div class="col-sm-12 col-md-8">
-                                                    <input type="text" name="search_name" id="search_order" class="form-control" >
-                                                    <span id="order_help" style="font-size: small;color: #6777ef"></span>
+                                                    <input type="text" name="search_orderId" id="search_order" class="form-control" >
+                                                    <span id="orderId_help" style="font-size: small;color: #6777ef"></span>
                                                 </div>
                                             </div>
 
@@ -134,7 +129,7 @@
 
                                                 <label class="col-form-label text-md-right col-12 col-md-4 col-lg-4" style="color:#000000">Customer</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input type="text" name="search_name" id="search_customer" class="form-control" >
+                                                    <input type="text" name="search_customer" id="search_customer" class="form-control" >
                                                     <span id="customerHelp" style="font-size: small;color: #6777ef"></span>
                                                 </div>
                                             </div>
@@ -146,7 +141,7 @@
 
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" style="color:#000000">Status</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <select id="city" class="form-control">
+                                                    <select id="city" name="search_status" class="form-control">
                                                         <option selected>Status</option>
                                                         <option>...</option>
                                                     </select>
@@ -162,8 +157,8 @@
 
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" style="color:#000000">Date</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input type="text" name="search_name" id="search_name" class="form-control" >
-                                                    <span id="searchHelp" style="font-size: small;color: #6777ef"></span>
+                                                    <input type="text" name="search_date" id="search_date" class="form-control datepicker" >
+                                                    <span id="searchDate" style="font-size: small;color: #6777ef"></span>
                                                 </div>
                                             </div>
 
@@ -276,18 +271,9 @@
                 </div>
             </section>
         </div>
-        <footer class="main-footer">
-            <div class="footer-left">
-                Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-            </div>
-            <div class="footer-right">
-
-            </div>
-        </footer>
+        <%@include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
 </div>
-
-<!-- General JS Scripts -->
 <script src="/assets/modules/jquery.min.js"></script>
 <script src="/assets/modules/popper.js"></script>
 <script src="/assets/modules/tooltip.js"></script>
@@ -297,26 +283,45 @@
 <script src="/assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
-<script src="/assets/modules/jquery-ui/jquery-ui.min.js"></script>
+
+<script src="/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+<script src="/assets/modules/select2/dist/js/select2.full.min.js"></script>
+<script src="/assets/modules/jquery-selectric/jquery.selectric.min.js"></script>
+<script src="/assets/modules/datatables/datatables.min.js"></script>
 
 <!-- Page Specific JS File -->
-<script src="/assets/js/page/components-table.js"></script>
+<script src="/assets/js/util.js"></script>
+
+<script src="/assets/confirm/jquery-confirm.js"></script>
 
 <!-- Template JS File -->
 <script src="/assets/js/scripts.js"></script>
 <script src="/assets/js/custom.js"></script>
-<script src="/assets/js/util.js"></script>
-<script src="/assets/modules/datatables/datatables.min.js"></script>
-</body>
 <script>
     var contextPath='${pageContext.request.contextPath}';
+
+
+    $("#search_order").focusin(function () {
+        $("#orderId_help").html("press enter to search");
+    });
+    $("#search_order").focusout(function () {
+        $("#orderId_help").html("");
+    });
 
 
 
 
     var columns = [
         { "sTitle": "No", "mData": "id" ,"sClass":"text-center"}
-        ,{ "sTitle": "Order Code", "mData": "orderCode" }
+        ,{   "sTitle":"Order Code",
+            "sClass": "text-center",
+            "mData": null,
+            "mRender": function(data) {
+                return '<span style="color:#00462e">#'+data.orderCode+'</span>';
+            }
+        }
         ,{ "sTitle": "Customer", "mData": "customerName" }
         ,{ "sTitle": "Status", "mData": "currentStatus" }
         ,{ "sTitle": "Order Created Date", "mData": "orderCreatedDate","sClass":"text-center" }
@@ -325,7 +330,16 @@
             "mData": null,
             "bSortable": false,
             "mRender": function(data) {
-                return '<a href="${pageContext.request.contextPath}/admin/orders/detail " onclick="funtion()" class="btn btn-icon icon-left btn-outline-primary"><i class="fa fa fa-envelope"></i> SMS</a>&nbsp;<a href="${pageContext.request.contextPath}/admin/orders/detail" onclick="funtion()" class="btn btn-icon icon-left btn-outline-dark"><i class="fa fa-shopping-bag"></i> Detail</a>';
+            var str='';
+            console.log(data.sms)
+            if(data.sms){
+                str=str+'<a href="#" onclick="sendAgainFunction(\''+data.id+'\')"  class="btn btn-icon icon-left btn-outline-success"><i class="fa fa-envelope-open"></i> SMS Delivered</a>';
+            }
+            else{
+                str=str+'<a href="#" onclick="smsFunction(\''+data.id+'\')"  class="btn btn-icon icon-left btn-outline-primary">&nbsp;<i class="fa fa fa-envelope "></i>&nbsp;&nbsp; SMS Send&nbsp;&nbsp;</a>';
+            }
+            str=str+'&nbsp;<a href="${pageContext.request.contextPath}/admin/orders/'+data.id+'" onclick="funtion()" class="btn btn-icon icon-left btn-outline-dark"><i class="fa fa-shopping-bag"></i> Detail</a>';
+                return str;
             }
         }];
 
@@ -335,16 +349,60 @@
 
 
 
+
     });
 
     function orderList(){
 
         var obj='';
 
+        console.log($("#search_form").serialize());
 
-        oTable = ajaxDataTable($('#resultTableId'), columns, '/rest/orders',obj, 10, true, true);
+        oTable = ajaxDataTableWithoutSelect($('#resultTableId'), columns, '/rest/orders',obj, 10, true, true);
 
 
     }
+
+    function smsFunction(id){
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/sms/sendSMS',
+            type: 'POST',
+            data: { id:id} ,
+
+            success: function (response) {
+            orderList();
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    function  sendAgainFunction(id) {
+        $.confirm({
+            animation: 'right',
+            closeAnimation: 'right',
+            animateFromElement: false,
+            icon: 'fa fa-envelope',
+            title: 'Are you sure?',
+            content: '<span style="font-size: small">Message had been sent,Are you sure you want to send again?</span>',
+            buttons:{
+                send: {
+                    text: 'send',
+                    btnClass: 'btn-tracking',
+                    action: function () {
+                     smsFunction(id);
+                    }
+                },
+
+                cancel: function () {
+
+                }
+            }
+        });
+    }
+
 </script>
 </html>

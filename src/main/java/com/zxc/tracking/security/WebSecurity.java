@@ -18,9 +18,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("USER")
                 .and()
-                .withUser("user2").password(passwordEncoder().encode("user2Pass")).roles("USER")
+                .withUser("delivery").password(passwordEncoder().encode("password")).roles("DELIVERY")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
+                .withUser("admin").password(passwordEncoder().encode("password")).roles("ADMIN");
     }
 
     @Override
@@ -30,8 +30,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/main/**").hasAnyRole("ADMIN","USER")
-                .antMatchers("/admin/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/main/**").hasAnyRole("ADMIN","DELIVERY")
+                .antMatchers("/admin/**").hasAnyRole("ADMIN","DELIVERY")
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/main",true);
 

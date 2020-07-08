@@ -27,6 +27,8 @@ public class OrderView {
 
     private long deliveryId;
 
+    private Boolean sms;
+
 
     public long getId() {
         return id;
@@ -106,5 +108,13 @@ public class OrderView {
 
     public void setOrderCreatedDate(String orderCreatedDate) {
         this.orderCreatedDate = orderCreatedDate;
+    }
+
+    public Boolean getSms() {
+        return sms;
+    }
+
+    public void setSms(Boolean sms) {
+        this.sms = sms;
     }
 }

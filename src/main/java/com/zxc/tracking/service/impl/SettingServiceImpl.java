@@ -1,9 +1,11 @@
 package com.zxc.tracking.service.impl;
 
+import com.zxc.tracking.model.Const.Message;
 import com.zxc.tracking.model.Const.Role;
 import com.zxc.tracking.model.User.User;
 import com.zxc.tracking.model.Util.Code;
 import com.zxc.tracking.repository.CodeRepository;
+import com.zxc.tracking.repository.MessageRepository;
 import com.zxc.tracking.repository.RoleRepository;
 import com.zxc.tracking.repository.UserRepository;
 import com.zxc.tracking.service.SettingService;
@@ -26,6 +28,9 @@ public class SettingServiceImpl implements SettingService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
 
     @Override
@@ -52,15 +57,25 @@ public class SettingServiceImpl implements SettingService {
     }
 
     @Override
+    public Code findCodeById(long id) {
+        return codeRepository.getCodeById(id);
+    }
+
+    @Override
     public List<User> deliveryList() {
-        try{
-            System.out.println("_____________________--"+roleRepository.getRoleByRole("DELIVERY"));
-        }catch (Exception e){
-            System.out.println("excefwefwefwefwe");
-            e.printStackTrace();
-        }
+
 
         return userRepository.findAllByRole(roleRepository.getRoleByRole(Role.DELIVERY.toString()));
+    }
+
+    @Override
+    public Message createMessageFormat(Message message) {
+        return messageRepository.save(message);
+    }
+
+    @Override
+    public Message getMessage(String type) {
+        return messageRepository.getMessageByType(type);
     }
 
 

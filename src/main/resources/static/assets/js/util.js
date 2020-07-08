@@ -1,46 +1,14 @@
-/**
- * Java Locus CRM javascript core framework.
- * Version : 1.0.0
- * Create Date :
- *
- * Modify History
- * =================================================================================================================================================================
- * Modify Date		Description													Version Update From		Version Update To
- * =================================================================================================================================================================
- */
+
 
 var AJAX_TIMEOUT = '60000'; // 1 minute = 60 second >>  1 second = 1000 milliseconds
-var LOADING_MSG = 'loading';
+var LOADING_MSG = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>';
 var curRowSelectedDt = 0;
 var chatMsgCount = 0;
 
 var datatable_emptyTable='Record not found';
-var datatable_pagedetailTable='Showing _START_ to _END_ of _TOTAL_ entries'
-/**
- * Description 	: Mask Input :: format input start on load jlo-common.js finish time
- * @param		: -
- * @returns		: -
- * @author 		: Poobase Sangsorn
- */
+var datatable_pagedetailTable='START_ to _END_ of _TOTAL_ entries'
 
-function setSelect2me(){
-    if (jQuery().select2) {
-        try{
-            $('.select2me').select2({
-                placeholder: select2_pleaseSelect,
-                allowClear: true
-            });
-        }catch(e){}
 
-    }
-}
-
-/***
- * Description : For check length phoneNo
- * @param phoneNo
- * @returns {Boolean}
- * @author preyanoot
- */
 function validatePhone(phoneNo){
 
     var replacePhone = new RegExp("\\-","g");
@@ -62,54 +30,7 @@ function validatePhone(phoneNo){
 }
 
 
-/**
- * Description 	: Mask Input :: format input start on load jlo-common.js finish time
- * @param		: -
- * @returns		: - format
- */
-function setMaskComponent(){
 
-    if ( $.isFunction($.fn.inputmask) ) {
-        $(".maskdate").inputmask("d/m/y", {
-            "placeholder": "dd/mm/yyyy"
-        });
-        $(".masktime").inputmask("hh:mm", {
-            "placeholder": "__:__"
-        });
-        $(".maskmobile").inputmask("099-999-9999",{
-            "placeholder": "___-___-____",
-        });
-        $(".masktel").inputmask("09-999-9999",{
-            "placeholder": ""
-        });
-
-        $(".maskzipcode").inputmask("99999",{
-            "placeholder": ""
-        });
-        $(".mask2digitnum").inputmask("99",{
-            "placeholder": ""
-        });
-
-        $(".maskcost").inputmask("9999999999",{
-            "placeholder": ""
-        });
-
-        $(".inputnumber").keypress(function (e) {
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                return false;
-            }
-        });
-    }
-}
-
-/***
- *
- * @param parentTag  division
- * @param attId      key Id Attachement
- * @param fileType  type of file
- * @param height    height
- * @author Poobase Sangsorn
- */
 function playAttFile(parentTag, attId, fileType, height){
 
     var urlReadFile  = CONTEXT_PATH+"/readFile.htm?attId="+attId;
@@ -279,48 +200,8 @@ function playAttCmpFile(parentTag, attId, fileType, height){
 }
 
 
-var $countdown;
-function idleTimeout(){
-
-    $('body').append('<div class="modal fade" id="idle-timeout-dialog" data-backdrop="static"><div class="modal-dialog modal-small"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Your session is about to expire.</h4></div><div class="modal-body"><p><i class="fa fa-warning"></i> You session will be locked in <span id="idle-timeout-counter"></span> seconds.</p><p>Do you want to continue your session?</p></div><div class="modal-footer"><button id="idle-timeout-dialog-logout" type="button" class="btn btn-default">No, Logout</button><button id="idle-timeout-dialog-keepalive" type="button" class="btn btn-primary" data-dismiss="modal">Yes, Keep Working</button></div></div></div></div>');
-
-    // start the idle timer plugin
-    $.idleTimeout('#idle-timeout-dialog', '.modal-content button:last', {
-        idleAfter: 600, // 600 seconds ไม่ได้อยู่ใน tab ในหน้าจอนั้น ไม่ได้ ขยับ mouse keyboard เกิน 600วิ
-        timeout: 30000, //30 seconds to timeout นับถอยหลัง logout
-        pollingInterval: 100, // 100 seconds live ส่งไปต่อชีวิต ผ่าน keepAliveURL
-        keepAliveURL: 'idletimeoutkeepalive.htm',
-        serverResponseEquals: 'OK',
-        onTimeout: function(){
-            window.location = "logout.htm";
-        },
-        onIdle: function(){
-            $('#idle-timeout-dialog').modal('show');
-            $countdown = $('#idle-timeout-counter');
-
-            $('#idle-timeout-dialog-keepalive').on('click', function () {
-                $('#idle-timeout-dialog').modal('hide');
-            });
-
-            $('#idle-timeout-dialog-logout').on('click', function () {
-                $('#idle-timeout-dialog').modal('hide');
-                $.idleTimeout.options.onTimeout.call(this);
-            });
-        },
-        onCountdown: function(counter){
-            $countdown.html(counter); // update the counter
-        }
-    });
-}
 
 
-/**
- * Description 	: To call controller via ajax and return to callback function. support multipart/form-data
- * @param		: objform - $("#formid")
- * 				: callbackFunction - Callback function.
- * @returns		: JSON Format
- * @author 		: Poobase Sangsorn
- */
 
 function ajaxSubmitForm(objform,callbackFunction){
     objform.ajaxForm({
@@ -585,19 +466,25 @@ function findEmptyCols(objTable) {
     }
 }
 
+function initajaxDataTable(objTable, columns) {
 
-/**
- * Description 	: To call controller via ajax and get json data set to datatable.
- * @param		: objTable - table object
- * 				: columns - aoColumns description.
- * 				: postUrl - HTTP request URL.
- * 				: param - HTTP request parameter.
- * 				: totalRecordPerPage - Total record per page.
- * 				: isPaginate - use pagination.
- * 				: showNumber - use ordering number.
- * @returns		: datatable object
- * @author		: Auttapol Pipatpatama
- */
+    return objTable.dataTable({
+        "aoColumns": columns,
+        "bFilter": false,
+        "bLengthChange": false,
+        "bDestroy": true,
+        "bSort" : false,
+        "bAutoWidth": false,
+        "bPaginate": false,
+        "bInfo": false,
+        "deferLoading": 57,
+        "oLanguage": {
+            "sEmptyTable": datatable_emptyTable,
+            "sInfo": datatable_pagedetailTable,
+            "sInfoEmpty": datatable_emptyTable
+        }
+    });
+}
 function ajaxDataTable (objTable, columns, postUrl, param, totalRecordPerPage, isPaginate, showNumber) {
 
 
@@ -645,6 +532,56 @@ function ajaxDataTable (objTable, columns, postUrl, param, totalRecordPerPage, i
     });
 }
 
+function ajaxDataTableWithoutSelect(objTable, columns, postUrl, param, totalRecordPerPage, isPaginate, showNumber) {
+
+
+    var recordPerPage = parseInt(totalRecordPerPage);
+
+    return objTable.dataTable({
+        "aoColumns": columns,
+        "bFilter": false,
+        "bLengthChange": false,
+        "bDestroy": true,
+        "bAutoWidth": false,
+        "rowId": 'extn',
+        "bPaginate": isPaginate,
+        "bInfo": isPaginate,
+        "bSort" : false,
+        "bServerSide": true,
+        "bProcessing": true,
+        "pageLength": 10,
+        "sServerMethod": "POST",
+        "iDisplayLength" : recordPerPage,
+        "sAjaxSource": postUrl,
+        "fnStateSave": function (oSettings, oData) {
+            localStorage.setItem('DataTables_' + window.location.pathname, JSON.stringify(oData));
+        },
+        "fnStateLoad": function (oSettings) {
+            var data = localStorage.getItem('DataTables_' + window.location.pathname);
+            return JSON.parse(data);
+        },
+        "fnServerData": function(sSource, aoData, fnCallback) {
+            console.log(aoData);
+            pushParam2Json(aoData, param);
+
+            console.log(param)
+
+            console.log("----"+aoData);
+            $.post( sSource, aoData, function (json) {
+                fnCallback(json);
+
+
+            } );
+        },
+        "fnDrawCallback":reDraw(showNumber, false,objTable),
+        "oLanguage": {  // language settings
+            "sProcessing": LOADING_MSG,
+            "sEmptyTable": datatable_emptyTable,
+            "sInfoEmpty": datatable_emptyTable
+        },
+    });
+}
+
 function pushParam2Json(aoData, getParam) {
 
     if (getParam != '') {
@@ -656,17 +593,13 @@ function pushParam2Json(aoData, getParam) {
             inside[param[0]] = param[1];
             aoData.push( {name: param[0], value:decodeURIComponent(param[1])} );
         });
+        console.log("dd=="+aoData)
     } else {
         console.log('No parameter');
     }
 }
 
-/**
- * Description 	: To redraw datatable for set ordering to column or redirect when use double click event.
- * @param		: oSettings from datatable.
- * @returns		: None
- * @author		: Auttapol Pipatpatama
- */
+
 function reDrawCallback(showNumber, useDbClick,objTable) {
 
     var objDtId = "";
@@ -695,6 +628,9 @@ function reDrawCallback(showNumber, useDbClick,objTable) {
 
                 curRowSelectedDt = $(this).index();
 
+
+
+
                 onRowSelected($(this),objTable);
             } );
         }
@@ -718,15 +654,33 @@ function reDrawCallback(showNumber, useDbClick,objTable) {
     };
 }
 
-/**
- * Description 	: To call controller via ajax and get json data to create tree.
- * @param		: objTree - Tree object.
- * 				: postUrl - HTTP request URL.
- * 				: param - HTTP request parameter.
- * 				: method - 'GET' or 'POST'
- * @returns		: None
- * @author		: Auttapol Pipatpatama
- */
+
+function reDraw(showNumber, useDbClick,objTable) {
+
+    var objDtId = "";
+
+    if(!empty(objTable)){
+        objDtId = objTable[0].id;
+    }
+
+
+    return function(oSettings) {
+        if (showNumber) {
+            for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
+                var tdValue = $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html();
+                if (tdValue.indexOf("href") >= 0 || tdValue == '') {
+                    $('td:eq(1)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+oSettings._iDisplayStart+1 );
+                } else {
+                    $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+oSettings._iDisplayStart+1 );
+                }
+
+            }
+        }
+
+    };
+}
+
+
 function loadJsonTree(objTree, postUrl, param, method) {
 
     jLoBlockUI();
@@ -912,224 +866,6 @@ function jLoMaskLoadingBlockUI(){
  */
 function jLoMaskLoadingUnBlockUI(){
     $("#maskLoadingGlobal").unmask();
-}
-
-
-/**
- * Description 	: Message Broadcast Interval
- * @param	:
- * @returns		:
- * @author		: Poobase Sangsorn
- */
-function messageBroadcastNavInbox(){
-
-    setInterval(function() {
-        $.ajax({
-            type: "POST",
-            url: CONTEXT_PATH+'/getInboxMessage.htm',
-            cache: false,
-            dataType:"json",
-            async: false,
-            cache: false,
-            success: function(json){
-                if (json != null) {
-                    console.log("json size:"+json.length);
-                    if(json.length>0){
-                        $("#inbox-badge").text(json.length);
-                        $("#inbox-badge").show();
-                        $("#countinboxnumber").html(json.length);
-                        $("#header_inbox_bar #countinbox p").show();
-                        $("#audio_newmessage")[0].play();
-                        if(typeof $.gritter != 'undefined'){
-                            var unique_id = $.gritter.add({
-                                // (string | mandatory) the heading of the notification
-                                title: $("#header_inbox_bar #countinbox p").html(),
-                                // (string | mandatory) the text inside the notification
-                                text: '<a href="'+CONTEXT_PATH+'/messageBroadcast.htm">'+seeallMessage+'</a>',
-                                // (string | optional) the class name you want to apply to that specific message
-                                class_name: 'my-sticky-class'
-                            });
-
-                            // You can have it return a unique id, this can be used to manually remove it later using
-                            setTimeout(function () {
-                                $.gritter.remove(unique_id, {
-                                    fade: true,
-                                    speed: 'slow'
-                                });
-                            }, 15000);
-                        }
-                        $("#inboxList").html("");
-                        for(var i=0;json.length>i;i++){
-                            console.log(json[i]);
-                            console.log("sender:"+json[i].userName);
-                            console.log("userpic:"+json[i].userPic);
-                            console.log("title:"+json[i].title);
-                            console.log("message:"+json[i].content);
-                            $("#inboxList").append('<li><a href="#msgId='+json[i].msgId+'" msgId="'+json[i].msgId+'">' +
-                                '<span class="photo">' +
-                                '<img src="'+CONTEXT_PATH+'/imageFile.htm?src='+json[i].userPic+'" alt=""/>' +
-                                '</span>' +
-                                '<span class="subject">' +
-                                '<span class="from">' +
-                                json[i].userName +
-                                '</span>' +
-                                '<span class="time">' +
-                                json[i].lastSenderTime +
-                                '</span>' +
-                                '</span>' +
-                                '<span class="message">' +
-                                '<b>'+json[i].title+'</b> ' +
-                                json[i].content +
-                                '</span>' +
-                                '</a></li>');
-                        }
-                    }
-                }
-            },
-            error : function() {
-                //result = false;
-            }
-        });
-
-    }, 30000);
-}
-
-function reloadTaskProgress() {
-    try {
-        /*
-        var srAmount = parseInt(getJsonData("countServiceRequestTask.htm", "", "POST"));
-        var actAmount =  parseInt(getJsonData("countActivityTask.htm", "", "POST"));
-        var totalTask = srAmount+actAmount;
-
-        $("#task-message").html(totalTask);
-        $("#task-badge").html(totalTask);
-
-        try {
-
-            if (totalTask > 0) {
-                var srPercentage = (srAmount / totalTask) * 100;
-                srPercentage = Math.round(srPercentage);
-                var actPercentage = (actAmount / totalTask) * 100;
-                actPercentage = Math.round(actPercentage);
-
-                $('#activityProgress').css('width', actPercentage+'%');
-                $('#activityProgress').attr('aria-valuenow', actPercentage);
-                $('#srProgress').css('width',srPercentage+'%');
-                $('#srProgress').attr('aria-valuenow', srPercentage);
-            }
-        } catch (error) {
-            console.log('Cannot calculate percentage : ' + error);
-        }
-        */
-
-        /*		$.post("countServiceRequestTask.htm",function(txtsrAmount){
-                    $.post("countActivityTask.htm",function(txtactAmount){
-                        $.post("countServiceRequestInThreshold.htm",function(txtThresholdSrAmount){
-                            $.post("countOverDueServiceRequest.htm",function(txtOverDueSrAmount){
-                                $.post("countEmpLocationLost.htm",function(txtEmpLostLocAmount){
-                                    var srAmount = parseInt(txtsrAmount);
-                                    var actAmount =  parseInt(txtactAmount);
-                                    var thresholdSrAmount = parseInt(txtThresholdSrAmount);
-                                    var overDueSrAmount = parseInt(txtOverDueSrAmount);
-                                    var emplostLocAmount = parseInt(txtEmpLostLocAmount);
-
-                                    var totalTask = srAmount+actAmount+thresholdSrAmount+overDueSrAmount+emplostLocAmount;
-                                    $("#task-message").html(totalTask);
-                                    $("#task-badge").html(totalTask);
-
-                                    try {
-
-                                        if (totalTask > 0) {
-                                            var srPercentage = (srAmount / totalTask) * 100;
-                                            srPercentage = Math.round(srPercentage);
-                                            var actPercentage = (actAmount / totalTask) * 100;
-                                            actPercentage = Math.round(actPercentage);
-                                            var thresholdSrPercentage = (thresholdSrAmount / totalTask) * 100;
-                                            thresholdSrPercentage = Math.round(thresholdSrPercentage);
-                                            var overDueSrPercentage = (overDueSrAmount / totalTask) * 100;
-                                            overDueSrPercentage = Math.round(overDueSrPercentage);
-                                            var lostEmpSignalPercentage = (emplostLocAmount / totalTask) * 100;
-                                            lostEmpSignalPercentage = Math.round(lostEmpSignalPercentage);
-
-                                            $('#activityProgress').css('width', actPercentage+'%');
-                                            $('#activityProgress').attr('aria-valuenow', actPercentage);
-                                            $('#srProgress').css('width',srPercentage+'%');
-                                            $('#srProgress').attr('aria-valuenow', srPercentage);
-                                            $('#thresholdSrProgress').css('width', thresholdSrPercentage+'%');
-                                            $('#thresholdSrProgress').attr('aria-valuenow', thresholdSrPercentage);
-                                            $('#overDueSrProgress').css('width', overDueSrPercentage+'%');
-                                            $('#overDueSrProgress').attr('aria-valuenow', overDueSrPercentage);
-                                            $('#emplostProgress').css('width', lostEmpSignalPercentage+'%');
-                                            $('#emplostProgress').attr('aria-valuenow', lostEmpSignalPercentage);
-
-                                        }
-                                    } catch (error) {
-                                        console.log('Cannot calculate percentage : ' + error);
-                                    }
-                                });
-                            });
-                        });
-                    });
-                });*/
-
-        //@sandar
-        $.post("countDoctorRequestTask.htm", function(txtdoctorCount){
-            var doctorCount = parseInt(txtdoctorCount);
-            $("#task-message").html(doctorCount);
-            $("#task-badge").html(doctorCount);
-
-            try{
-
-                if( doctorCount > 0 ){
-                    var doctorPercentage = (doctorCount/100) * 100;
-                    doctorPercentage = Math.round(doctorPercentage);
-
-                    $('#doctorProgress').css('width', doctorPercentage+'%');
-                }
-
-            }catch(error){
-                console.log('cannot calculate percentage : ' + error);
-            }
-        });
-
-    } catch (err) {
-        console.log(err);
-        $("#task-badge").html(0);
-    }
-
-}
-
-function reloadNewSampleRequest() {
-
-
-    try {
-
-        //Count New Sample Request
-        $.post("countNewSampleRequest.htm", function(txtnewSampleCount){
-
-            var newSampleCount = parseInt(txtnewSampleCount);
-            $("#sample-message").html(newSampleCount);
-            $("#sample-badge").html(newSampleCount);
-
-            try{
-
-                if( newSampleCount > 0 ){
-                    var newSamplePercentage = (newSampleCount/100) * 100;
-                    newSamplePercentage = Math.round(newSamplePercentage);
-
-                    $('#newSampleProgress').css('width', newSamplePercentage+'%');
-                }
-
-            }catch(error){
-                console.log('cannot calculate percentage : ' + error);
-            }
-        });
-
-    } catch (err) {
-        console.log(err);
-        $("#sample-badge").html(0);
-    }
-
 }
 
 function reloadCompletedSampleRequest(){
@@ -2007,13 +1743,6 @@ $.growlCustomUI = function(resultCode , resultDesc, timeout, onClose) {
     });
 };
 
-/**
- * Create codebook select component from hidden field
- * @param obj input hidden object (required)
- * @param codeType (required)
- * @param initCaption
- * @author Auttapol Pipatpatama
- */
 function getCodebookSel2DropdownByCodeType(obj, codeType, initCaption) {
     jLoBlockUI();
 
@@ -2812,53 +2541,6 @@ function clearValidate(element) {
     }
 }
 
-/**
- * Example.
- *  var compArr = ["txt_sr_subject","cmb_sr_type","btn_srSave","button_asset"];
- *	setComponentVisibleById(compArr,false);
- * @param comObject is Array Type
- * @param logic  is Boolean( show=true ,hide=false)
- * @author Mr.BoonOom
- */
-function setComponentVisibleById(comArrObject,logic) {
-
-    // Disable=true ,Enable=false
-    for(var i = 0; i < comArrObject.length; i++){
-        if(logic){
-            $('#'+comArrObject[i]).show();
-        }else{
-            $('#'+comArrObject[i]).hide();
-        }
-
-    }
-
-}
-
-function setClassActiveTab(tabObjMain,liTabId,tabId,tabIndex){
-
-    tabObjMain.tabs("option", "active", tabIndex);
-
-    var liActive = $("#"+liTabId).hasClass("active");
-
-    if(liActive){
-        $("#"+liTabId).removeClass("active");
-    }
-
-    $("#"+liTabId).addClass("active");
-
-    var active = $("#"+tabId).hasClass("active");
-    var classIn = $("#"+tabId).hasClass("in");
-
-    if(active && classIn){
-        $("#"+tabId).removeClass("active");
-        $("#"+tabId).removeClass("in");
-    }
-
-    $("#"+tabId).addClass("active");
-    $("#"+tabId).addClass("in");
-
-}
-
 function alertConfirmYesNo(messageConfirm,callbackYes,callbackNo,param){
 
     var box = bootbox.dialog({
@@ -2960,192 +2642,3 @@ function ajaxDataTable_sorting(objTable, columns, postUrl, param, totalRecordPer
 }
 
 
-
-function sqlQuery(index)
-{
-    //alert("sqlQuery :"+sqlparam);
-    orlist=[];
-    betweenlist=[];
-    andlist=[];
-    startwithlist=[];
-    inlist=[];
-    for(var j=1;j<=index;j++)
-    {
-
-        var selectType=$("#searchType"+j).val();
-        var anddata=$("#inputAndData"+j).val();
-        if(selectType=='OR')
-        {
-            orlist.push($("#inputData"+j).val());
-        }
-        else if(selectType=='BETWEEN')
-        {
-            betweenlist.push($("#inputData"+j).val());
-            andlist.push(anddata);
-        }
-        else if(selectType=='START WITH')
-        {
-            startwithlist.push($("#inputData"+j).val());
-        }
-        else if(selectType=='IN')
-        {
-            inlist.push($("#inputData"+j).val());
-        }
-
-    }
-    var sql="";//\n AND (
-    var orsize=orlist.length;
-    var betweensize=betweenlist.length;
-    var startwithsize=startwithlist.length;
-    var insize=inlist.length;
-    /*alert("ORS :"+orsize+"\n"+
-            "BetweenS :"+betweensize+"\n"+
-            "SWS :"+startwithsize+"\n"+
-            "INS :"+insize+"\n");*/
-    for(var k=0;k<orsize;k++)
-    {
-        sql+=" "+sqlparam+"*'"+orlist[k]+"' OR\n";
-    }
-    for(var k=0;k<betweensize;k++)
-    {
-        sql+=" "+sqlparam+" BETWEEN '"+betweenlist[k]+"' AND '"+andlist[k]+"' OR\n";
-    }
-    for(var k=0;k<startwithsize;k++)
-    {
-        sql+=" "+sqlparam+" LIKE '"+startwithlist[k]+"^' OR\n";
-    }
-    if(insize>0)
-    {
-        sql+=" "+sqlparam+" IN (";
-        for(var k=0;k<insize;k++)
-        {
-            sql+="'"+inlist[k]+"',";
-        }
-        var index= sql.lastIndexOf(",");
-        sql=sql.substring(0, index);
-        sql+=") OR\n";
-    }
-    var index= sql.lastIndexOf(" ");
-    sql=sql.substring(0, index);
-    //sql+=")";
-    //alert(sql);
-
-    return sql;
-}
-
-/**
- * ChatMessage
- * Re-send Unsent Chat Messages at Project Starts
- * calls every ? minutes
- */
-function resendChatMessages() {
-
-    //alert("IN jlocommon.js resendChatMessages....");
-
-    setInterval(function() {
-
-        $.ajax({
-            type: "POST",
-            url: CONTEXT_PATH+'/resendUnsetMessages.htm',
-            cache: false,
-            dataType:"json",
-            async: false,
-            cache: false,
-            success: function(json){
-                if (json != null) {
-                    console.log("json size:"+json.length);
-                    //alert("Finished sending unsent messages! " + json.length);
-                }
-            },
-            error : function() {
-                console.log("Error in sending unsent messages!");
-            }
-        });
-
-    }, 60000);
-}
-
-/**
- * Description 	: Chat Message
- * @param	:
- * @returns		:
- * @author		:
- */
-function chatMessageNavInbox(){
-
-    setInterval(function() {
-
-        $.ajax({
-            type: "POST",
-            url: CONTEXT_PATH+'/getUnreadMsgList.htm',
-            cache: false,
-            dataType:"json",
-            async: false,
-            cache: false,
-            success: function(json){
-                if (json != null) {
-                    console.log("json size:"+json.length);
-                    if(json.length>0){
-                        $("#chat-badge").text(json.length);
-                        $("#chat-badge").show();
-                        $("#countChatMsgNumber").html(json.length);
-
-                        $("#chatboxList").html("");
-                        for(var i=0;json.length>i;i++){
-
-                            $("#chatboxList").append('<li><a href="/BSCRM/chatBoxFromNoti.htm?emp_id='+json[i].emp_id + '&emp_name='+json[i].emp_name + '&emp_device_id='+json[i].chat_msg_device_id + '">' +
-                                '<span class="subject">' +
-                                '<span class="from">' +
-                                json[i].emp_name +
-                                '</span>' +
-                                '<span class="time">' +
-
-                                '</span>' +
-                                '</span>' +
-                                '<span class="message">' +
-                                json[i].chat_msg_content +
-                                '</span>' +
-                                '</a></li>');
-                        }
-                    } else {
-                        $("#chatboxList").html("");
-                        $("#countChatMsgNumber").html("");
-                    }
-                }  else {
-                    $("#chatboxList").html("");
-                    $("#countChatMsgNumber").html("");
-                }
-            },
-            error : function() {
-                console.log("Chat Msg Noti ERROR!!!");
-            }
-
-        });
-        reloadTaskProgress();
-        reloadNewSampleRequest();
-        reloadCompletedSampleRequest();
-    }, 5000);
-}
-
-function goToChatMessage(emp_id, emp_name) {
-
-    /*$("#messageList").html("");
-    $("chatEmp").html= emp_name;
-    var urlSearchHistory = 'searchEmpChatHistory.htm';
-    console.log("Jlocommon SearchHisURL - " + urlSearchHistory);
-    getChatMessageHistory(emp_id, urlSearchHistory);*/
-    var param = "emp_id="+emp_id+"&emp_name="+emp_name;
-    $.ajax({
-        timeout: AJAX_TIMEOUT,
-        url : "/chatBox.htm",
-        type: "GET",
-        data: param,
-        dataType: "json",
-        success: function(data, textStatus, jqXHR){
-
-
-        },error: function (xhr, textStatus, errorThrown) {
-
-        }
-    });
-}

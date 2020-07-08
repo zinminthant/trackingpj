@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Activities &mdash; Stisla</title>
+    <title>121 complex</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -280,7 +281,7 @@
                                                     <div class="col-lg-10">
                                                         <div class="invoice-title">
                                                             <h4>#${order.orderCode}</h4>
-                                                            <div class="invoice-number">${order.statusSet[0].date}</div>
+                                                            <div class="invoice-number"><fmt:formatDate value="${order.statusSet[0].date}" pattern="yyyy-dd-MMM hh:mm aa"/> </div>
                                                         </div>
                                                         <br><br>
 
@@ -372,14 +373,14 @@
                                 <div class="activities">
                                     <c:forEach  items="${before}" var="status">
                                         <div class="activity">
-                                            <div class="activity-icon bg-tracking text-white shadow-tracking">
+                                            <div class="activity-icon bg-tracking text-danger">
                                                 <i class="${status.code.codeIcon}"></i>
                                             </div>
                                             <div class="activity-detail">
                                                 <div class="mb-2">
                                                     <span class="text-job" style="font-weight:900;font-size:15px">${status.code.codeName}</span>
                                                     <span class="bullet"></span>
-                                                    <a class="text-job" href="#">${status.date}</a>
+                                                    <a class="text-job" href="#"><fmt:formatDate value="${status.date}" pattern="yyyy-dd-MMM hh:mm aa"/></a>
 
                                                 </div>
                                                 <p>${status.code.descriptioon}</p>
@@ -427,8 +428,8 @@
             <br>
 
             <hr style=" border-top: 1px dashed #00642e;">
-            your order from :&nbsp;<img src="/assets/img/tracking.png" width="40px">
-            <span style="color: #00642e;font-weight: bold;font-size: large">shop name</span>
+            your order from :&nbsp;<img src="/assets/img/onetwoone.png" width="170px">
+
         </div>
 
     </div>

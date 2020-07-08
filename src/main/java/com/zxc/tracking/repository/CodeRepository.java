@@ -14,4 +14,6 @@ public interface CodeRepository extends JpaRepository<Code,Long> {
     List<Code> findAllByCodeType(String codeType);
 
     Code getCodeByCodeID(String codeId);
+
+    Code getCodeById(long id);
 }
